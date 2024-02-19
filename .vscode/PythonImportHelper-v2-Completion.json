@@ -9,6 +9,23 @@
         "documentation": {}
     },
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "parser",
+        "importPath": "dateutil",
+        "description": "dateutil",
+        "isExtraImport": true,
+        "detail": "dateutil",
+        "documentation": {}
+    },
+    {
         "label": "numpy",
         "kind": 6,
         "isExtraImport": true,
@@ -40,6 +57,204 @@
         "description": "bokeh.plotting",
         "isExtraImport": true,
         "detail": "bokeh.plotting",
+        "documentation": {}
+    },
+    {
+        "label": "directory",
+        "kind": 5,
+        "importPath": "Crashes_organised",
+        "description": "Crashes_organised",
+        "peekOfCode": "directory = './assignment1 data'\n# List of file names based on the naming pattern\nfile_names = [f'stats_crashes_{year}{month:02d}_overview.csv' for year in [2021] for month in range(6,13)]\n# Initialize an empty list to store DataFrames\ndataframes = []\n# Loop through the file names, read each file into a DataFrame, and append it to the list\nfor file_name in file_names:\n    file_path = os.path.join(directory, file_name)\n    try:\n        # Try reading with UTF-16 encoding if UTF-8 fails",
+        "detail": "Crashes_organised",
+        "documentation": {}
+    },
+    {
+        "label": "file_names",
+        "kind": 5,
+        "importPath": "Crashes_organised",
+        "description": "Crashes_organised",
+        "peekOfCode": "file_names = [f'stats_crashes_{year}{month:02d}_overview.csv' for year in [2021] for month in range(6,13)]\n# Initialize an empty list to store DataFrames\ndataframes = []\n# Loop through the file names, read each file into a DataFrame, and append it to the list\nfor file_name in file_names:\n    file_path = os.path.join(directory, file_name)\n    try:\n        # Try reading with UTF-16 encoding if UTF-8 fails\n        df = pd.read_csv(file_path, encoding='utf-16')\n        dataframes.append(df)",
+        "detail": "Crashes_organised",
+        "documentation": {}
+    },
+    {
+        "label": "dataframes",
+        "kind": 5,
+        "importPath": "Crashes_organised",
+        "description": "Crashes_organised",
+        "peekOfCode": "dataframes = []\n# Loop through the file names, read each file into a DataFrame, and append it to the list\nfor file_name in file_names:\n    file_path = os.path.join(directory, file_name)\n    try:\n        # Try reading with UTF-16 encoding if UTF-8 fails\n        df = pd.read_csv(file_path, encoding='utf-16')\n        dataframes.append(df)\n    except UnicodeDecodeError:\n        # Fall back to UTF-8 or another encoding as needed",
+        "detail": "Crashes_organised",
+        "documentation": {}
+    },
+    {
+        "label": "crashes_merged",
+        "kind": 5,
+        "importPath": "Crashes_organised",
+        "description": "Crashes_organised",
+        "peekOfCode": "crashes_merged = pd.concat(dataframes, ignore_index=True)\n# Convert the 'Date' column to datetime format\ncrashes_merged['Date'] = pd.to_datetime(crashes_merged['Date'])\n# Sort the DataFrame by the 'Date' column\ncrashes_merged = crashes_merged.sort_values(by='Date')\n# Display the first few rows to verify the DataFrame\nprint(crashes_merged.head())",
+        "detail": "Crashes_organised",
+        "documentation": {}
+    },
+    {
+        "label": "crashes_merged['Date']",
+        "kind": 5,
+        "importPath": "Crashes_organised",
+        "description": "Crashes_organised",
+        "peekOfCode": "crashes_merged['Date'] = pd.to_datetime(crashes_merged['Date'])\n# Sort the DataFrame by the 'Date' column\ncrashes_merged = crashes_merged.sort_values(by='Date')\n# Display the first few rows to verify the DataFrame\nprint(crashes_merged.head())",
+        "detail": "Crashes_organised",
+        "documentation": {}
+    },
+    {
+        "label": "crashes_merged",
+        "kind": 5,
+        "importPath": "Crashes_organised",
+        "description": "Crashes_organised",
+        "peekOfCode": "crashes_merged = crashes_merged.sort_values(by='Date')\n# Display the first few rows to verify the DataFrame\nprint(crashes_merged.head())",
+        "detail": "Crashes_organised",
+        "documentation": {}
+    },
+    {
+        "label": "standardize_column_names",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def standardize_column_names(df, column_mapping):\n    standardized_columns = {}\n    for col in df.columns:\n        standardized_name = column_mapping.get(col, col)  # Get the standardized name if it exists\n        standardized_columns[col] = standardized_name\n    df.rename(columns=standardized_columns, inplace=True)\n    return df\ndef filter_function(file_path, product_id, column_mapping):\n    df = pd.read_csv(file_path)\n    df = standardize_column_names(df, column_mapping)  # Standardize column names here",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "filter_function",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def filter_function(file_path, product_id, column_mapping):\n    df = pd.read_csv(file_path)\n    df = standardize_column_names(df, column_mapping)  # Standardize column names here\n    filtered_df = df[df['Product ID'].str.contains(product_id)]  # Use the standardized column name\n    return filtered_df\ndef process_data(df):\n    df['Date'] = df['Date'].apply(parser.parse)  # Make sure 'Date' is the standardized column name\n    # Additional preprocessing steps can be added here\n    return df\ndirectory = '.\\\\assignment1 data'",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "process_data",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def process_data(df):\n    df['Date'] = df['Date'].apply(parser.parse)  # Make sure 'Date' is the standardized column name\n    # Additional preprocessing steps can be added here\n    return df\ndirectory = '.\\\\assignment1 data'\nproduct_id = 'com.vansteinengroentjes.apps.ddfive'\ncolumn_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "directory",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "directory = '.\\\\assignment1 data'\nproduct_id = 'com.vansteinengroentjes.apps.ddfive'\ncolumn_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',\n    'Order Charged Date': 'Date',\n    'Transaction Time': 'Timestamp',\n    'Order Charged Timestamp': 'Timestamp',\n    'Tax Type': 'Tax Status',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "product_id",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "product_id = 'com.vansteinengroentjes.apps.ddfive'\ncolumn_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',\n    'Order Charged Date': 'Date',\n    'Transaction Time': 'Timestamp',\n    'Order Charged Timestamp': 'Timestamp',\n    'Tax Type': 'Tax Status',\n    'Financial Status': 'Tax Status',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "column_mapping",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "column_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',\n    'Order Charged Date': 'Date',\n    'Transaction Time': 'Timestamp',\n    'Order Charged Timestamp': 'Timestamp',\n    'Tax Type': 'Tax Status',\n    'Financial Status': 'Tax Status',\n    'Product id': 'Product ID',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "processed_files",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "processed_files = os.listdir(save_directory)\nall_dfs = []  # List to store all DataFrames\nfor file in processed_files:\n    if file.endswith('_processed.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(save_directory, file)\n        df = pd.read_csv(file_path)\n        all_dfs.append(df)\n# Concatenate all DataFrames in the list\nmerged_df = pd.concat(all_dfs, ignore_index=True)\n# Save the merged DataFrame to a new CSV file",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "all_dfs",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "all_dfs = []  # List to store all DataFrames\nfor file in processed_files:\n    if file.endswith('_processed.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(save_directory, file)\n        df = pd.read_csv(file_path)\n        all_dfs.append(df)\n# Concatenate all DataFrames in the list\nmerged_df = pd.concat(all_dfs, ignore_index=True)\n# Save the merged DataFrame to a new CSV file\nmerged_file_path = os.path.join(\".\\\\merged_data\", 'sales_merged.csv')",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "merged_df",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "merged_df = pd.concat(all_dfs, ignore_index=True)\n# Save the merged DataFrame to a new CSV file\nmerged_file_path = os.path.join(\".\\\\merged_data\", 'sales_merged.csv')\nmerged_df.to_csv(merged_file_path, index=False)\nprint(f'Merged file saved to: {merged_file_path}')",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "merged_file_path",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "merged_file_path = os.path.join(\".\\\\merged_data\", 'sales_merged.csv')\nmerged_df.to_csv(merged_file_path, index=False)\nprint(f'Merged file saved to: {merged_file_path}')",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "directory",
+        "kind": 5,
+        "importPath": "stats_country_organised",
+        "description": "stats_country_organised",
+        "peekOfCode": "directory = './assignment1 data'\n# List of file names based on the naming pattern\nfile_names = [f'stats_ratings_{year}{month:02d}_country.csv' for year in [2021] for month in range(6,13)]\n# Initialize an empty list to store DataFrames\ndataframes = []\n# Loop through the file names, read each file into a DataFrame, and append it to the list\nfor file_name in file_names:\n    file_path = os.path.join(directory, file_name)\n    try:\n        # Try reading with UTF-16 encoding if UTF-8 fails",
+        "detail": "stats_country_organised",
+        "documentation": {}
+    },
+    {
+        "label": "file_names",
+        "kind": 5,
+        "importPath": "stats_country_organised",
+        "description": "stats_country_organised",
+        "peekOfCode": "file_names = [f'stats_ratings_{year}{month:02d}_country.csv' for year in [2021] for month in range(6,13)]\n# Initialize an empty list to store DataFrames\ndataframes = []\n# Loop through the file names, read each file into a DataFrame, and append it to the list\nfor file_name in file_names:\n    file_path = os.path.join(directory, file_name)\n    try:\n        # Try reading with UTF-16 encoding if UTF-8 fails\n        df = pd.read_csv(file_path, encoding='utf-16')\n        dataframes.append(df)",
+        "detail": "stats_country_organised",
+        "documentation": {}
+    },
+    {
+        "label": "dataframes",
+        "kind": 5,
+        "importPath": "stats_country_organised",
+        "description": "stats_country_organised",
+        "peekOfCode": "dataframes = []\n# Loop through the file names, read each file into a DataFrame, and append it to the list\nfor file_name in file_names:\n    file_path = os.path.join(directory, file_name)\n    try:\n        # Try reading with UTF-16 encoding if UTF-8 fails\n        df = pd.read_csv(file_path, encoding='utf-16')\n        dataframes.append(df)\n    except UnicodeDecodeError:\n        # Fall back to UTF-8 or another encoding as needed",
+        "detail": "stats_country_organised",
+        "documentation": {}
+    },
+    {
+        "label": "country_stats_merged",
+        "kind": 5,
+        "importPath": "stats_country_organised",
+        "description": "stats_country_organised",
+        "peekOfCode": "country_stats_merged = pd.concat(dataframes, ignore_index=True)\n# Convert the 'Date' column to datetime format\ncountry_stats_merged['Date'] = pd.to_datetime(country_stats_merged['Date'])\n# Sort the DataFrame by the 'Date' column\ncountry_stats_merged = country_stats_merged.sort_values(by='Date')\n# Display the first few rows to verify the DataFrame\nprint(country_stats_merged.head())",
+        "detail": "stats_country_organised",
+        "documentation": {}
+    },
+    {
+        "label": "country_stats_merged['Date']",
+        "kind": 5,
+        "importPath": "stats_country_organised",
+        "description": "stats_country_organised",
+        "peekOfCode": "country_stats_merged['Date'] = pd.to_datetime(country_stats_merged['Date'])\n# Sort the DataFrame by the 'Date' column\ncountry_stats_merged = country_stats_merged.sort_values(by='Date')\n# Display the first few rows to verify the DataFrame\nprint(country_stats_merged.head())",
+        "detail": "stats_country_organised",
+        "documentation": {}
+    },
+    {
+        "label": "country_stats_merged",
+        "kind": 5,
+        "importPath": "stats_country_organised",
+        "description": "stats_country_organised",
+        "peekOfCode": "country_stats_merged = country_stats_merged.sort_values(by='Date')\n# Display the first few rows to verify the DataFrame\nprint(country_stats_merged.head())",
+        "detail": "stats_country_organised",
         "documentation": {}
     }
 ]

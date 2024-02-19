@@ -31,6 +31,7 @@ crashes_merged['Date'] = pd.to_datetime(crashes_merged['Date'])
 # Sort the DataFrame by the 'Date' column
 crashes_merged = crashes_merged.sort_values(by='Date')
 
-# Display the first few rows to verify the DataFrame
-print(crashes_merged.head())
+# Save the merged DataFrame to a new CSV file
+merged_file_path = os.path.join("./merged_data", 'crashes_merged.csv')
+crashes_merged.to_csv(merged_file_path, index=False)
 

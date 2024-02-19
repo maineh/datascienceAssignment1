@@ -31,6 +31,7 @@ country_stats_merged['Date'] = pd.to_datetime(country_stats_merged['Date'])
 # Sort the DataFrame by the 'Date' column
 country_stats_merged = country_stats_merged.sort_values(by='Date')
 
-# Display the first few rows to verify the DataFrame
-print(country_stats_merged.head())
+# Save the merged DataFrame to a new CSV file
+merged_file_path = os.path.join("./merged_data", 'country_stats_merged.csv')
+country_stats_merged.to_csv(merged_file_path, index=False)
 

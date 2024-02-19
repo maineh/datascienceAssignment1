@@ -5,7 +5,7 @@ import os
 directory = './assignment1 data'
 
 # List of file names based on the naming pattern
-file_names = [f'stats_crashes_{year}{month:02d}_overview.csv' for year in [2021] for month in range(6,13)]
+file_names = [f'stats_ratings_{year}{month:02d}_country.csv' for year in [2021] for month in range(6,13)]
 
 # Initialize an empty list to store DataFrames
 dataframes = []
@@ -23,14 +23,14 @@ for file_name in file_names:
         dataframes.append(df)
 
 # Concatenate all DataFrames in the list into a single DataFrame
-crashes_merged = pd.concat(dataframes, ignore_index=True)
+country_stats_merged = pd.concat(dataframes, ignore_index=True)
 
 # Convert the 'Date' column to datetime format
-crashes_merged['Date'] = pd.to_datetime(crashes_merged['Date'])
+country_stats_merged['Date'] = pd.to_datetime(country_stats_merged['Date'])
 
 # Sort the DataFrame by the 'Date' column
-crashes_merged = crashes_merged.sort_values(by='Date')
+country_stats_merged = country_stats_merged.sort_values(by='Date')
 
 # Display the first few rows to verify the DataFrame
-print(crashes_merged.head())
+print(country_stats_merged.head())
 

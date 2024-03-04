@@ -1,0 +1,42 @@
+1. Sales Volume:
+   - KPI: Monthly Revenue Growth
+   - Visualization: Line chart showing the monthly growth percentage in real money (Amount) and transaction count.
+Use sales_2021
+
+   - KPI: Product Rate
+   - Visualization: Bar chart displaying the number of different kind of products per month.
+Use sales_2021
+
+
+2. Attribute Segmentation and Filtering:
+   - KPI: SKU Performance Index
+   - Visualization: Stacked area chart representing sales volume segmented by SKU id over time.
+Use sales_2021
+
+   - KPI: Peak Sales Time
+   - Visualization: Heatmap showing sales volume based on the day of the week and time of the day.
+Use sales_2021
+
+   - KPI: International Sales Contribution
+   - Visualization: Pie chart illustrating sales distribution by country.
+Use sales_2021
+
+
+3. Ratings vs Stability:
+   - KPI: App Stability Score
+   - Visualization: Line chart showing the daily average rating along with the number of app crashes.
+Use stats_rating_2021_overview (daily avg rating) and stats_crashes (daily crashes)
+
+   - KPI: Number of Pruchases and crashes
+   - Visualization: Scatter plot depicting the correlation between the number of crashes and the amount of pruchases 
+Use stats_crashes (daily crashes) and reviews 
+
+
+4. Geographical Development:
+   - KPI: Country-wise Revenue Growth
+   - Visualization: Choropleth map displaying the sales volume growth rate in different countries.
+Use sales_2021 (Buyer Country)
+
+   - KPI: Average Rating by Country
+   - Visualization: Bubble map with countries sized based on the average app rating.
+Use stats_ratings_2021_country

@@ -2,6 +2,19 @@ import os
 import pandas as pd
 from dateutil import parser
 
+def delete_columns(df, columns_to_delete):
+    # Check if the specified columns exist in the DataFrame before attempting deletion
+    existing_columns = set(df.columns)
+    columns_to_delete = [col for col in columns_to_delete if col in existing_columns]
+    
+    if columns_to_delete:
+        df.drop(columns=columns_to_delete, inplace=True)
+        print("Specified columns deleted successfully.")
+    else:
+        print("No specified columns found for deletion.")
+    
+    return df
+
 def map_currency_conversion_rates(df):
     required_columns = [
         'Buyer Currency', 
@@ -41,7 +54,8 @@ def standardize_column_names(df, column_mapping):
     return df
 
 def filter_function(file_path, product_id, column_mapping):
-    df = pd.read_csv(file_path)
+    dtype = {'Amount (Merchant Currency)': float}
+    df = pd.read_csv(file_path, dtype=dtype)
     df = standardize_column_names(df, column_mapping)  # Standardize column names here
     filtered_df = df[df['Product ID'].str.contains(product_id)]  # Use the standardized column name
     return filtered_df
@@ -61,7 +75,6 @@ column_mapping = {
     'Transaction Time': 'Timestamp',
     'Order Charged Timestamp': 'Timestamp',
     'Tax Type': 'Tax Status',
-    'Financial Status': 'Tax Status',
     'Product id': 'Product ID',
     'Product ID': 'Product ID',
     'Sku Id': 'SKU ID',
@@ -109,10 +122,40 @@ def convert_charged_amount(df, currency_conversion_to_euro):
     else:
         print("Required columns for Charged Amount conversion are not present. Skipping conversion.")
 
+def merge_columns(df):
+    # Check if both columns exist in the DataFrame before attempting merge
+    if 'Charged Amount' in df.columns and 'Amount (Merchant Currency)' in df.columns:
+        df['Amount (Merchant Currency)'] = df.apply(lambda row: row['Charged Amount'] if pd.notna(row['Charged Amount']) else row['Amount (Merchant Currency)'], axis=1)
+        print("Columns merged successfully.")
+    if 'Financial Status' in df.columns and 'Transaction Type' in df.columns:
+        df['Transaction Type'] = df.apply(lambda row: 'Charge' if row['Financial Status'] == 'Charged' else row['Transaction Type'], axis=1)
+        print("Columns merged successfully.")
+    else:
+        print("Required columns for merging are not present.")
+
+    return df
+
+
 # After all operations are done, but before the merged file is saved, call the convert_charged_amount function
 currency_conversion_to_euro = map_currency_conversion_rates(merged_df)  # Assuming merged_df is your merged DataFrame
 if currency_conversion_to_euro:
     convert_charged_amount(merged_df, currency_conversion_to_euro)
+
+merged_df = merge_columns(merged_df)
+    
+columns_to_delete = ['Timestamp', 'Tax Status', 'Refund Type', 'Financial Status','Product Type','Hardware', 'Buyer State', 'Buyer Currency', 'Amount (Buyer Currency)','Currency Conversion Rate', 'Merchant Currency', 'Base Plan ID', 'Offer ID','Device Model',	'Currency of Sale'	,'Item Price',	'Taxes Collected','Charged Amount',	'City of Buyer',	'State of Buyer'  ]  # Specify columns to delete here  # noqa: E999
+merged_df = delete_columns(merged_df, columns_to_delete)  # Update merged_df with the result of delete_columns
+
+def filter_transaction_type(df):
+    if 'Transaction Type' in df.columns:
+        df = df[df['Transaction Type'] == 'Charge']
+        print("Filtered on Transaction Type: Charge.")
+    else:
+        print("Transaction Type column not found. Skipping filtering.")
+    return df
+
+# # Before saving the merged file, apply the filter function
+merged_df = filter_transaction_type(merged_df)
 
 # Save the merged DataFrame to a new CSV file
 merged_file_path = os.path.join(".\\merged_data", 'sales_merged.csv')

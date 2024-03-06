@@ -1,11 +1,28 @@
 [
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "pandas",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "parser",
+        "importPath": "dateutil",
+        "description": "dateutil",
+        "isExtraImport": true,
+        "detail": "dateutil",
         "documentation": {}
     },
     {
@@ -40,6 +57,123 @@
         "description": "bokeh.plotting",
         "isExtraImport": true,
         "detail": "bokeh.plotting",
+        "documentation": {}
+    },
+    {
+        "label": "map_currency_conversion_rates",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def map_currency_conversion_rates(df):\n    required_columns = [\n        'Buyer Currency', \n        'Currency Conversion Rate', \n        'Merchant Currency'\n    ]\n    currency_conversion_to_euro = {}\n    # Check if all required columns are in the DataFrame\n    if all(column in df.columns for column in required_columns) and 'EUR' in df['Merchant Currency'].unique():\n        # Iterate over each row in the DataFrame",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "standardize_column_names",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def standardize_column_names(df, column_mapping):\n    standardized_columns = {}\n    for col in df.columns:\n        standardized_name = column_mapping.get(col, col)  # Get the standardized name if it exists\n        standardized_columns[col] = standardized_name\n    df.rename(columns=standardized_columns, inplace=True)\n    return df\ndef filter_function(file_path, product_id, column_mapping):\n    df = pd.read_csv(file_path)\n    df = standardize_column_names(df, column_mapping)  # Standardize column names here",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "filter_function",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def filter_function(file_path, product_id, column_mapping):\n    df = pd.read_csv(file_path)\n    df = standardize_column_names(df, column_mapping)  # Standardize column names here\n    filtered_df = df[df['Product ID'].str.contains(product_id)]  # Use the standardized column name\n    return filtered_df\ndef process_data(df):\n    df['Date'] = df['Date'].apply(parser.parse)  # Make sure 'Date' is the standardized column name\n    # Additional preprocessing steps can be added here\n    return df\ndirectory = '.\\\\assignment1 data'",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "process_data",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def process_data(df):\n    df['Date'] = df['Date'].apply(parser.parse)  # Make sure 'Date' is the standardized column name\n    # Additional preprocessing steps can be added here\n    return df\ndirectory = '.\\\\assignment1 data'\nproduct_id = 'com.vansteinengroentjes.apps.ddfive'\ncolumn_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "convert_charged_amount",
+        "kind": 2,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "def convert_charged_amount(df, currency_conversion_to_euro):\n    # Check if \"Currency of Sale\" and \"Charged Amount\" columns are in the DataFrame\n    if 'Currency of Sale' in df.columns and 'Charged Amount' in df.columns:\n        # Convert \"Charged Amount\" based on \"Currency of Sale\" using the conversion rates\n        df['Charged Amount'] = df.apply(lambda row: round((float(row['Charged Amount'].replace(',', '')) if isinstance(row['Charged Amount'], str) else row['Charged Amount']) * currency_conversion_to_euro.get(row['Currency of Sale'], 1), 2), axis=1)\n        print(\"Charged Amount conversion completed.\")\n    else:\n        print(\"Required columns for Charged Amount conversion are not present. Skipping conversion.\")\n# After all operations are done, but before the merged file is saved, call the convert_charged_amount function\ncurrency_conversion_to_euro = map_currency_conversion_rates(merged_df)  # Assuming merged_df is your merged DataFrame",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "directory",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "directory = '.\\\\assignment1 data'\nproduct_id = 'com.vansteinengroentjes.apps.ddfive'\ncolumn_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',\n    'Order Charged Date': 'Date',\n    'Transaction Time': 'Timestamp',\n    'Order Charged Timestamp': 'Timestamp',\n    'Tax Type': 'Tax Status',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "product_id",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "product_id = 'com.vansteinengroentjes.apps.ddfive'\ncolumn_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',\n    'Order Charged Date': 'Date',\n    'Transaction Time': 'Timestamp',\n    'Order Charged Timestamp': 'Timestamp',\n    'Tax Type': 'Tax Status',\n    'Financial Status': 'Tax Status',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "column_mapping",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "column_mapping = {\n    'Description': 'Transaction ID',\n    'Order Number': 'Transaction ID',\n    'Transaction Date': 'Date',\n    'Order Charged Date': 'Date',\n    'Transaction Time': 'Timestamp',\n    'Order Charged Timestamp': 'Timestamp',\n    'Tax Type': 'Tax Status',\n    'Financial Status': 'Tax Status',\n    'Product id': 'Product ID',",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "processed_files",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "processed_files = os.listdir(save_directory)\nall_dfs = []  # List to store all DataFrames\nfor file in processed_files:\n    if file.endswith('_processed.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(save_directory, file)\n        df = pd.read_csv(file_path)\n        all_dfs.append(df)\n# Concatenate all DataFrames in the list\nmerged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "all_dfs",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "all_dfs = []  # List to store all DataFrames\nfor file in processed_files:\n    if file.endswith('_processed.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(save_directory, file)\n        df = pd.read_csv(file_path)\n        all_dfs.append(df)\n# Concatenate all DataFrames in the list\nmerged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    # Check if \"Currency of Sale\" and \"Charged Amount\" columns are in the DataFrame",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "merged_df",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "merged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    # Check if \"Currency of Sale\" and \"Charged Amount\" columns are in the DataFrame\n    if 'Currency of Sale' in df.columns and 'Charged Amount' in df.columns:\n        # Convert \"Charged Amount\" based on \"Currency of Sale\" using the conversion rates\n        df['Charged Amount'] = df.apply(lambda row: round((float(row['Charged Amount'].replace(',', '')) if isinstance(row['Charged Amount'], str) else row['Charged Amount']) * currency_conversion_to_euro.get(row['Currency of Sale'], 1), 2), axis=1)\n        print(\"Charged Amount conversion completed.\")\n    else:\n        print(\"Required columns for Charged Amount conversion are not present. Skipping conversion.\")\n# After all operations are done, but before the merged file is saved, call the convert_charged_amount function",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "currency_conversion_to_euro",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "currency_conversion_to_euro = map_currency_conversion_rates(merged_df)  # Assuming merged_df is your merged DataFrame\nif currency_conversion_to_euro:\n    convert_charged_amount(merged_df, currency_conversion_to_euro)\n# Save the merged DataFrame to a new CSV file\nmerged_file_path = os.path.join(\".\\\\merged_data\", 'sales_merged.csv')\nmerged_df.to_csv(merged_file_path, index=False)\nprint(f'Merged file saved to: {merged_file_path}')",
+        "detail": "data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "merged_file_path",
+        "kind": 5,
+        "importPath": "data_scrubber",
+        "description": "data_scrubber",
+        "peekOfCode": "merged_file_path = os.path.join(\".\\\\merged_data\", 'sales_merged.csv')\nmerged_df.to_csv(merged_file_path, index=False)\nprint(f'Merged file saved to: {merged_file_path}')",
+        "detail": "data_scrubber",
         "documentation": {}
     }
 ]

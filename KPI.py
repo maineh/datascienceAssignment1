@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from dateutil import parser
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Directory where your CSV files are stored, update this path as necessary
 directory = './merged_data'
@@ -13,8 +14,6 @@ for file in file_name:
     if file.endswith('merged.csv'):  # Ensure to only include processed files
         file_path = os.path.join(directory, file)
         df = pd.read_csv(file_path)
-print(df.head())
-
 
 #The following lines describe a KPI based on Sales volume
 # Convert 'Date' to datetime object
@@ -32,14 +31,6 @@ print(average_amount_by_month)
 #This line calculates the monthly revenue and growth
 monthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()
 print(monthly_revenue)
-
-""""# Step 5: Create a Plot
-plt.figure(figsize=(10, 6))
-monthly_revenue.plot(kind='bar', color='skyblue')
-plt.title('Monthly Revenue')
-plt.xlabel('Month')
-plt.ylabel('Revenue')
-plt.show()"""
 
 monthly_transaction_count = df.groupby('Month')['Transaction ID'].count()
 print(monthly_transaction_count)
@@ -67,9 +58,27 @@ ax2.legend(loc='upper right')
 plt.title('Monthly Growth Percentage: Revenue and Transaction Count')
 #plt.show()
 
-
-# Filter rows where 'Amount' is higher than 10
-filtered_data = df[df['Amount (Merchant Currency)'] > 10]
-
-# Display the filtered DataFrame
+# Filter rows where 'Amount' is higher than 20 to see what goes wrong in month 11
+filtered_data = df[df['Amount (Merchant Currency)'] > 20]
 print(filtered_data)
+
+
+
+#KPI that shows Product Rate per month
+monthly_grouped_data = df.groupby('Month')
+# Step 2: Group by 'Product Title' within each month and count transactions
+monthly_transaction_count_per_product = monthly_grouped_data.apply(lambda x: x.groupby('Product Title')['Transaction ID'].count().reset_index(name='Transaction_Count'))
+
+# Display the result
+print(monthly_transaction_count_per_product)
+
+fig, ax = plt.subplots(figsize=(12, 6))
+
+
+sns.barplot(x='Month', y='Transaction_Count', hue='Product Title', data=monthly_transaction_count_per_product, ax=ax)
+
+# Display the result
+plt.title('Monthly Transactions per Product Type')
+plt.xlabel('Month')
+plt.ylabel('Transactions')
+plt.show()

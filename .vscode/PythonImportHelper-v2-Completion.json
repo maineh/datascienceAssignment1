@@ -18,6 +18,40 @@
         "documentation": {}
     },
     {
+        "label": "parser",
+        "importPath": "dateutil",
+        "description": "dateutil",
+        "isExtraImport": true,
+        "detail": "dateutil",
+        "documentation": {}
+    },
+    {
+        "label": "parser",
+        "importPath": "dateutil",
+        "description": "dateutil",
+        "isExtraImport": true,
+        "detail": "dateutil",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "seaborn",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "seaborn",
+        "description": "seaborn",
+        "detail": "seaborn",
+        "documentation": {}
+    },
+    {
         "label": "numpy",
         "kind": 6,
         "isExtraImport": true,
@@ -49,14 +83,6 @@
         "description": "bokeh.plotting",
         "isExtraImport": true,
         "detail": "bokeh.plotting",
-        "documentation": {}
-    },
-    {
-        "label": "parser",
-        "importPath": "dateutil",
-        "description": "dateutil",
-        "isExtraImport": true,
-        "detail": "dateutil",
         "documentation": {}
     },
     {
@@ -123,6 +149,204 @@
         "documentation": {}
     },
     {
+        "label": "directory",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "directory = './merged_data'\nfile_name = ['sales_merged.csv']\nfor file in file_name:\n    if file.endswith('merged.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(directory, file)\n        df = pd.read_csv(file_path)\nprint(df.head())\n#The following lines describe a KPI based on Sales volume\n# Convert 'Date' to datetime object\ndf['Date'] = pd.to_datetime(df['Date'])",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "file_name",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "file_name = ['sales_merged.csv']\nfor file in file_name:\n    if file.endswith('merged.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(directory, file)\n        df = pd.read_csv(file_path)\nprint(df.head())\n#The following lines describe a KPI based on Sales volume\n# Convert 'Date' to datetime object\ndf['Date'] = pd.to_datetime(df['Date'])\n# Extract date attributes into new columns",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "df['Date']",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "df['Date'] = pd.to_datetime(df['Date'])\n# Extract date attributes into new columns\ndf['Year'] = df['Date'].dt.year\ndf['Month'] = df['Date'].dt.month\ndf['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "df['Year']",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "df['Year'] = df['Date'].dt.year\ndf['Month'] = df['Date'].dt.month\ndf['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "df['Month']",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "df['Month'] = df['Date'].dt.month\ndf['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "df['Day']",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "df['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "average_amount_by_month",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "average_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_revenue",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_transaction_count",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth\nax1.plot(monthly_revenue_growth, color='blue', marker='o', label='Revenue Growth (%)')\nax1.set_xlabel('Month')",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_revenue_growth",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth\nax1.plot(monthly_revenue_growth, color='blue', marker='o', label='Revenue Growth (%)')\nax1.set_xlabel('Month')\nax1.set_ylabel('Revenue Growth (%)', color='blue')\nax1.tick_params('y', colors='blue')\nax1.legend(loc='upper left')",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_transaction_count_growth",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth\nax1.plot(monthly_revenue_growth, color='blue', marker='o', label='Revenue Growth (%)')\nax1.set_xlabel('Month')\nax1.set_ylabel('Revenue Growth (%)', color='blue')\nax1.tick_params('y', colors='blue')\nax1.legend(loc='upper left')\n# Create a secondary y-axis for Transaction Count",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "ax2",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "ax2 = ax1.twinx()\nax2.plot(monthly_transaction_count_growth, color='green', marker='s', label='Transaction Count Growth (%)')\nax2.set_ylabel('Transaction Count Growth (%)', color='green')\nax2.tick_params('y', colors='green')\nax2.legend(loc='upper right')\nplt.title('Monthly Growth Percentage: Revenue and Transaction Count')\nplt.show()\n# Filter rows where 'Amount' is higher than 10\nfiltered_data = df[df['Amount (Merchant Currency)'] > 10]\n# Display the filtered DataFrame",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "filtered_data",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "filtered_data = df[df['Amount (Merchant Currency)'] > 10]\n# Display the filtered DataFrame\nprint(filtered_data)\n#KPI that shows Product Rate per month\nmonthly_grouped_data = df.groupby('Month')\n# Step 2: Group by 'Product Title' within each month and count transactions\nmonthly_transaction_count_per_product = monthly_grouped_data.apply(lambda x: x.groupby('Product Title')['Transaction ID'].count().reset_index(name='Transaction_Count'))\n# Display the result\nprint(monthly_transaction_count_per_product)\nfig, ax = plt.subplots(figsize=(10, 5))",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_grouped_data",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_grouped_data = df.groupby('Month')\n# Step 2: Group by 'Product Title' within each month and count transactions\nmonthly_transaction_count_per_product = monthly_grouped_data.apply(lambda x: x.groupby('Product Title')['Transaction ID'].count().reset_index(name='Transaction_Count'))\n# Display the result\nprint(monthly_transaction_count_per_product)\nfig, ax = plt.subplots(figsize=(10, 5))\ncolor_mapping = {'Product Title 1': 'pink', 'Product Title 2': 'blue'} \ncolor_mapping1=[color_mapping.get(title, 'gray') for title in monthly_transaction_count_per_product['Product Title']]\nsns.barplot(x='Month', y='Transaction_Count', hue='Product Title', data=monthly_transaction_count_per_product, palette = ['blue', 'pink'], ax=ax)\n# Display the result",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_transaction_count_per_product",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_transaction_count_per_product = monthly_grouped_data.apply(lambda x: x.groupby('Product Title')['Transaction ID'].count().reset_index(name='Transaction_Count'))\n# Display the result\nprint(monthly_transaction_count_per_product)\nfig, ax = plt.subplots(figsize=(10, 5))\ncolor_mapping = {'Product Title 1': 'pink', 'Product Title 2': 'blue'} \ncolor_mapping1=[color_mapping.get(title, 'gray') for title in monthly_transaction_count_per_product['Product Title']]\nsns.barplot(x='Month', y='Transaction_Count', hue='Product Title', data=monthly_transaction_count_per_product, palette = ['blue', 'pink'], ax=ax)\n# Display the result\nplt.title('Monthly Transactions per Product Type')\nplt.xlabel('Month')",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "color_mapping",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "color_mapping = {'Product Title 1': 'pink', 'Product Title 2': 'blue'} \ncolor_mapping1=[color_mapping.get(title, 'gray') for title in monthly_transaction_count_per_product['Product Title']]\nsns.barplot(x='Month', y='Transaction_Count', hue='Product Title', data=monthly_transaction_count_per_product, palette = ['blue', 'pink'], ax=ax)\n# Display the result\nplt.title('Monthly Transactions per Product Type')\nplt.xlabel('Month')\nplt.ylabel('Transactions')\nplt.show()\n#KPI that shows Product Rate per month\nmonthly_grouped_data = df.groupby('Month')",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_grouped_data",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_grouped_data = df.groupby('Month')\n# Step 2: Group by 'Product Title' within each month and count transactions\nmonthly_transaction_count_per_sku = monthly_grouped_data.apply(lambda x: x.groupby('SKU ID')['Transaction ID'].count().reset_index(name='Transaction_Count'))\n# Display the result\nprint(monthly_transaction_count_per_sku)\nfig, ax = plt.subplots(figsize=(10, 5))\ncolor_mapping = {'SKU ID 0': 'pink', 'SKU ID 1': 'blue'} \ncolor_mapping1=[color_mapping.get(title, 'gray') for title in monthly_transaction_count_per_sku['SKU ID']]\nsns.barplot(x='Month', y='Transaction_Count', hue='SKU ID', data=monthly_transaction_count_per_sku, palette = ['blue', 'pink'], ax=ax)\n# Display the result",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "monthly_transaction_count_per_sku",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "monthly_transaction_count_per_sku = monthly_grouped_data.apply(lambda x: x.groupby('SKU ID')['Transaction ID'].count().reset_index(name='Transaction_Count'))\n# Display the result\nprint(monthly_transaction_count_per_sku)\nfig, ax = plt.subplots(figsize=(10, 5))\ncolor_mapping = {'SKU ID 0': 'pink', 'SKU ID 1': 'blue'} \ncolor_mapping1=[color_mapping.get(title, 'gray') for title in monthly_transaction_count_per_sku['SKU ID']]\nsns.barplot(x='Month', y='Transaction_Count', hue='SKU ID', data=monthly_transaction_count_per_sku, palette = ['blue', 'pink'], ax=ax)\n# Display the result\nplt.title('Monthly Transactions per SKU ID')\nplt.xlabel('Month')",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "color_mapping",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "color_mapping = {'SKU ID 0': 'pink', 'SKU ID 1': 'blue'} \ncolor_mapping1=[color_mapping.get(title, 'gray') for title in monthly_transaction_count_per_sku['SKU ID']]\nsns.barplot(x='Month', y='Transaction_Count', hue='SKU ID', data=monthly_transaction_count_per_sku, palette = ['blue', 'pink'], ax=ax)\n# Display the result\nplt.title('Monthly Transactions per SKU ID')\nplt.xlabel('Month')\nplt.ylabel('Transactions')\nplt.show()\n# Create a new column 'weekday' containing the weekday for each date (0 = Monday, 1 = Tuesday, ..., 6 = Sunday)\ndf['Weekday'] = df['Date'].dt.weekday",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "df['Weekday']",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "df['Weekday'] = df['Date'].dt.weekday\ndf['Month'] = df['Date'].dt.month\n# Display the DataFrame with the new 'weekday' column\nprint(df[['Date', 'Weekday']])\n# Create a pivot table for the heatmap\nheatmap_data = df.pivot_table(index = 'Month', columns='Weekday', values='Transaction ID', aggfunc='count')\n# Create a Plot\nfig, ax = plt.subplots(figsize=(12, 8))\n# Use seaborn to create a heatmap\nsns.heatmap(heatmap_data, cmap='Blues', annot=True, fmt='g', linewidths=.5, cbar_kws={'label': 'Transaction Count'})",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "df['Month']",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "df['Month'] = df['Date'].dt.month\n# Display the DataFrame with the new 'weekday' column\nprint(df[['Date', 'Weekday']])\n# Create a pivot table for the heatmap\nheatmap_data = df.pivot_table(index = 'Month', columns='Weekday', values='Transaction ID', aggfunc='count')\n# Create a Plot\nfig, ax = plt.subplots(figsize=(12, 8))\n# Use seaborn to create a heatmap\nsns.heatmap(heatmap_data, cmap='Blues', annot=True, fmt='g', linewidths=.5, cbar_kws={'label': 'Transaction Count'})\n# Display the result",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
+        "label": "heatmap_data",
+        "kind": 5,
+        "importPath": "KPI",
+        "description": "KPI",
+        "peekOfCode": "heatmap_data = df.pivot_table(index = 'Month', columns='Weekday', values='Transaction ID', aggfunc='count')\n# Create a Plot\nfig, ax = plt.subplots(figsize=(12, 8))\n# Use seaborn to create a heatmap\nsns.heatmap(heatmap_data, cmap='Blues', annot=True, fmt='g', linewidths=.5, cbar_kws={'label': 'Transaction Count'})\n# Display the result\nplt.title('Heatmap of Transaction Count Based on Day of the Week and Time of the Day')\nplt.xlabel('Day of the Week')\nplt.ylabel('Month of the Week')\nplt.show()",
+        "detail": "KPI",
+        "documentation": {}
+    },
+    {
         "label": "delete_columns",
         "kind": 2,
         "importPath": "sales_data_scrubber",
@@ -136,7 +360,7 @@
         "kind": 2,
         "importPath": "sales_data_scrubber",
         "description": "sales_data_scrubber",
-        "peekOfCode": "def map_currency_conversion_rates(df):\n    required_columns = [\n        'Buyer Currency', \n        'Currency Conversion Rate', \n        'Merchant Currency'\n    ]\n    currency_conversion_to_euro = {}\n    # Check if all required columns are in the DataFrame\n    if all(column in df.columns for column in required_columns) and 'EUR' in df['Merchant Currency'].unique():\n        # Iterate over each row in the DataFrame",
+        "peekOfCode": "def map_currency_conversion_rates(df):\n    global currency_conversion_to_euro, available_currencies\n    required_columns = [\n        'Buyer Currency', \n        'Currency Conversion Rate', \n        'Merchant Currency'\n    ]\n    # Check if all required columns are in the DataFrame\n    if all(column in df.columns for column in required_columns) and 'EUR' in df['Merchant Currency'].unique():\n        # Iterate over each row in the DataFrame",
         "detail": "sales_data_scrubber",
         "documentation": {}
     },
@@ -172,7 +396,7 @@
         "kind": 2,
         "importPath": "sales_data_scrubber",
         "description": "sales_data_scrubber",
-        "peekOfCode": "def convert_charged_amount(df, currency_conversion_to_euro):\n    # Check if \"Currency of Sale\" and \"Charged Amount\" columns are in the DataFrame\n    if 'Currency of Sale' in df.columns and 'Charged Amount' in df.columns:\n        # Convert \"Charged Amount\" based on \"Currency of Sale\" using the conversion rates\n        df['Charged Amount'] = df.apply(lambda row: round((float(row['Charged Amount'].replace(',', '')) if isinstance(row['Charged Amount'], str) else row['Charged Amount']) * currency_conversion_to_euro.get(row['Currency of Sale'], 1), 2), axis=1)\n        print(\"Charged Amount conversion completed.\")\n    else:\n        print(\"Required columns for Charged Amount conversion are not present. Skipping conversion.\")\ndef merge_columns(df):\n    # Check if both columns exist in the DataFrame before attempting merge",
+        "peekOfCode": "def convert_charged_amount(df, currency_conversion_to_euro):\n    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results\n    for index, row in df.iterrows():\n        currency = row['Currency of Sale']\n        if pd.isnull(currency):  # Check for NaN currency\n            print(f\"Row with index {index} has NaN currency. Skipping conversion.\")\n            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)\n            continue  # Skip the rest of the loop for this row\n    if currency in available_currencies:\n        # Convert the 'Charged Amount'",
         "detail": "sales_data_scrubber",
         "documentation": {}
     },
@@ -191,6 +415,24 @@
         "importPath": "sales_data_scrubber",
         "description": "sales_data_scrubber",
         "peekOfCode": "def filter_transaction_type(df):\n    if 'Transaction Type' in df.columns:\n        df = df[df['Transaction Type'] == 'Charge']\n        print(\"Filtered on Transaction Type: Charge.\")\n    else:\n        print(\"Transaction Type column not found. Skipping filtering.\")\n    return df\n# # Before saving the merged file, apply the filter function\nmerged_df = filter_transaction_type(merged_df)\n# Save the merged DataFrame to a new CSV file",
+        "detail": "sales_data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "available_currencies",
+        "kind": 5,
+        "importPath": "sales_data_scrubber",
+        "description": "sales_data_scrubber",
+        "peekOfCode": "available_currencies = set()\ncurrency_conversion_to_euro = {}\ndef map_currency_conversion_rates(df):\n    global currency_conversion_to_euro, available_currencies\n    required_columns = [\n        'Buyer Currency', \n        'Currency Conversion Rate', \n        'Merchant Currency'\n    ]\n    # Check if all required columns are in the DataFrame",
+        "detail": "sales_data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "currency_conversion_to_euro",
+        "kind": 5,
+        "importPath": "sales_data_scrubber",
+        "description": "sales_data_scrubber",
+        "peekOfCode": "currency_conversion_to_euro = {}\ndef map_currency_conversion_rates(df):\n    global currency_conversion_to_euro, available_currencies\n    required_columns = [\n        'Buyer Currency', \n        'Currency Conversion Rate', \n        'Merchant Currency'\n    ]\n    # Check if all required columns are in the DataFrame\n    if all(column in df.columns for column in required_columns) and 'EUR' in df['Merchant Currency'].unique():",
         "detail": "sales_data_scrubber",
         "documentation": {}
     },
@@ -235,7 +477,7 @@
         "kind": 5,
         "importPath": "sales_data_scrubber",
         "description": "sales_data_scrubber",
-        "peekOfCode": "all_dfs = []  # List to store all DataFrames\nfor file in processed_files:\n    if file.endswith('_processed.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(save_directory, file)\n        df = pd.read_csv(file_path)\n        all_dfs.append(df)\n# Concatenate all DataFrames in the list\nmerged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    # Check if \"Currency of Sale\" and \"Charged Amount\" columns are in the DataFrame",
+        "peekOfCode": "all_dfs = []  # List to store all DataFrames\nfor file in processed_files:\n    if file.endswith('_processed.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(save_directory, file)\n        df = pd.read_csv(file_path)\n        all_dfs.append(df)\n# Concatenate all DataFrames in the list\nmerged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results",
         "detail": "sales_data_scrubber",
         "documentation": {}
     },
@@ -244,16 +486,7 @@
         "kind": 5,
         "importPath": "sales_data_scrubber",
         "description": "sales_data_scrubber",
-        "peekOfCode": "merged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    # Check if \"Currency of Sale\" and \"Charged Amount\" columns are in the DataFrame\n    if 'Currency of Sale' in df.columns and 'Charged Amount' in df.columns:\n        # Convert \"Charged Amount\" based on \"Currency of Sale\" using the conversion rates\n        df['Charged Amount'] = df.apply(lambda row: round((float(row['Charged Amount'].replace(',', '')) if isinstance(row['Charged Amount'], str) else row['Charged Amount']) * currency_conversion_to_euro.get(row['Currency of Sale'], 1), 2), axis=1)\n        print(\"Charged Amount conversion completed.\")\n    else:\n        print(\"Required columns for Charged Amount conversion are not present. Skipping conversion.\")\ndef merge_columns(df):",
-        "detail": "sales_data_scrubber",
-        "documentation": {}
-    },
-    {
-        "label": "currency_conversion_to_euro",
-        "kind": 5,
-        "importPath": "sales_data_scrubber",
-        "description": "sales_data_scrubber",
-        "peekOfCode": "currency_conversion_to_euro = map_currency_conversion_rates(merged_df)  # Assuming merged_df is your merged DataFrame\nif currency_conversion_to_euro:\n    convert_charged_amount(merged_df, currency_conversion_to_euro)\nmerged_df = merge_columns(merged_df)\ncolumns_to_delete = ['Timestamp', 'Tax Status', 'Refund Type', 'Financial Status','Product Type','Hardware', 'Buyer State', 'Buyer Currency', 'Amount (Buyer Currency)','Currency Conversion Rate', 'Merchant Currency', 'Base Plan ID', 'Offer ID','Device Model',\t'Currency of Sale'\t,'Item Price',\t'Taxes Collected','Charged Amount',\t'City of Buyer',\t'State of Buyer'  ]  # Specify columns to delete here  # noqa: E999\nmerged_df = delete_columns(merged_df, columns_to_delete)  # Update merged_df with the result of delete_columns\ndef filter_transaction_type(df):\n    if 'Transaction Type' in df.columns:\n        df = df[df['Transaction Type'] == 'Charge']\n        print(\"Filtered on Transaction Type: Charge.\")",
+        "peekOfCode": "merged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results\n    for index, row in df.iterrows():\n        currency = row['Currency of Sale']\n        if pd.isnull(currency):  # Check for NaN currency\n            print(f\"Row with index {index} has NaN currency. Skipping conversion.\")\n            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)\n            continue  # Skip the rest of the loop for this row\n    if currency in available_currencies:",
         "detail": "sales_data_scrubber",
         "documentation": {}
     },

@@ -15,14 +15,17 @@ def delete_columns(df, columns_to_delete):
     
     return df
 
+available_currencies = set()
+currency_conversion_to_euro = {}
+
 def map_currency_conversion_rates(df):
+    global currency_conversion_to_euro, available_currencies
     required_columns = [
         'Buyer Currency', 
         'Currency Conversion Rate', 
         'Merchant Currency'
     ]
     
-    currency_conversion_to_euro = {}
 
     # Check if all required columns are in the DataFrame
     if all(column in df.columns for column in required_columns) and 'EUR' in df['Merchant Currency'].unique():
@@ -34,15 +37,16 @@ def map_currency_conversion_rates(df):
                 conversion_rate = row['Currency Conversion Rate']
                 # Update the dictionary with the currency and its conversion rate to Euro
                 currency_conversion_to_euro[currency] = conversion_rate
+                available_currencies.add(currency)
         
         print("Currency conversion mapping processed.")
-        print(currency_conversion_to_euro)
-        return currency_conversion_to_euro
+        print(currency_conversion_to_euro) 
     else:
         # Skip the file if required columns are not present or if merchant currency is not Euro
         print("Required columns for currency conversion mapping are not present or merchant currency is not Euro. Skipping file.")
-        return None
-
+    
+    print("Available Currencies", available_currencies)
+    return currency_conversion_to_euro, available_currencies
 
 
 def standardize_column_names(df, column_mapping):
@@ -92,7 +96,8 @@ for filename in os.listdir(directory):
         
         filtered_df = filter_function(file_path, product_id, column_mapping)  # Pass column_mapping as an argument
         processed_df = process_data(filtered_df)
-        map_currency_conversion_rates(processed_df)
+        currency_conversion_to_euro, available_currencies = map_currency_conversion_rates(processed_df)  # Assuming merged_df is your merged DataFrame
+        print("Total Available Currencies", available_currencies)
         
         save_directory = '.\\processed_data'
         processed_file_name = os.path.basename(file_path).replace('.csv', '_processed.csv')
@@ -114,13 +119,38 @@ for file in processed_files:
 merged_df = pd.concat(all_dfs, ignore_index=True)
 
 def convert_charged_amount(df, currency_conversion_to_euro):
-    # Check if "Currency of Sale" and "Charged Amount" columns are in the DataFrame
-    if 'Currency of Sale' in df.columns and 'Charged Amount' in df.columns:
-        # Convert "Charged Amount" based on "Currency of Sale" using the conversion rates
-        df['Charged Amount'] = df.apply(lambda row: round((float(row['Charged Amount'].replace(',', '')) if isinstance(row['Charged Amount'], str) else row['Charged Amount']) * currency_conversion_to_euro.get(row['Currency of Sale'], 1), 2), axis=1)
-        print("Charged Amount conversion completed.")
+    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results
+
+    for index, row in df.iterrows():
+        currency = row['Currency of Sale']
+        if pd.isnull(currency):  # Check for NaN currency
+            print(f"Row with index {index} has NaN currency. Skipping conversion.")
+            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)
+            continue  # Skip the rest of the loop for this row
+
+    if currency in available_currencies:
+        # Convert the 'Charged Amount'
+        try:
+            # Ensure the 'Charged Amount' is treated as a float, then multiply by conversion rate and round
+            if isinstance(row['Charged Amount'], str):
+                converted_amount = float(row['Charged Amount'].replace(',', ''))
+            else:
+                converted_amount = row['Charged Amount']
+            
+            converted_amount *= currency_conversion_to_euro[currency]
+            converted_amount = round(converted_amount, 2)  # Apply rounding here
+            
+            row['Charged Amount'] = converted_amount
+            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)
+        except KeyError:
+            # Handle the case where the conversion rate is missing
+            print(f"Missing conversion rate for currency: {currency}")
     else:
-        print("Required columns for Charged Amount conversion are not present. Skipping conversion.")
+        print(f"Row with index {index} and currency {currency} is being removed.")
+
+    print("Conversion and filtering completed.")
+    return result_df
+    
 
 def merge_columns(df):
     # Check if both columns exist in the DataFrame before attempting merge
@@ -137,9 +167,13 @@ def merge_columns(df):
 
 
 # After all operations are done, but before the merged file is saved, call the convert_charged_amount function
-currency_conversion_to_euro = map_currency_conversion_rates(merged_df)  # Assuming merged_df is your merged DataFrame
+
+print("At this point, i'm converting the currencies", available_currencies)
+
+
+print("Currency conversion rates:", currency_conversion_to_euro)
 if currency_conversion_to_euro:
-    convert_charged_amount(merged_df, currency_conversion_to_euro)
+    merged_df = convert_charged_amount(merged_df, currency_conversion_to_euro)
 
 merged_df = merge_columns(merged_df)
     

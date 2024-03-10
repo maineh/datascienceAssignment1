@@ -170,7 +170,6 @@ def merge_columns(df):
 
 print("At this point, i'm converting the currencies", available_currencies)
 
-merged_df.to_csv('.\\temp_merged_dataframe.csv', index=False)
 
 print("Currency conversion rates:", currency_conversion_to_euro)
 if currency_conversion_to_euro:

@@ -128,25 +128,20 @@ def convert_charged_amount(df, currency_conversion_to_euro):
             result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)
             continue  # Skip the rest of the loop for this row
 
-    if currency in available_currencies:
-        # Convert the 'Charged Amount'
-        try:
-            # Ensure the 'Charged Amount' is treated as a float, then multiply by conversion rate and round
-            if isinstance(row['Charged Amount'], str):
-                converted_amount = float(row['Charged Amount'].replace(',', ''))
-            else:
-                converted_amount = row['Charged Amount']
-            
-            converted_amount *= currency_conversion_to_euro[currency]
-            converted_amount = round(converted_amount, 2)  # Apply rounding here
-            
-            row['Charged Amount'] = converted_amount
-            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)
-        except KeyError:
-            # Handle the case where the conversion rate is missing
-            print(f"Missing conversion rate for currency: {currency}")
-    else:
-        print(f"Row with index {index} and currency {currency} is being removed.")
+        # Check if the currency is in the available currencies set
+        if currency in available_currencies:
+            # Convert the 'Charged Amount'
+            try:
+                converted_amount = (float(row['Charged Amount'].replace(',', '')) * currency_conversion_to_euro[currency]
+                                    ) if isinstance(row['Charged Amount'], str) else row['Charged Amount'] * currency_conversion_to_euro[currency]
+                converted_amount = round(converted_amount, ndigits=2)
+                row['Charged Amount'] = converted_amount
+                result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)
+            except KeyError:
+                # Handle the case where the conversion rate is missing
+                print(f"Missing conversion rate for currency: {currency}")
+        else:
+            print(f"Row with index {index} and currency {currency} is being removed.")
 
     print("Conversion and filtering completed.")
     return result_df
@@ -170,6 +165,9 @@ def merge_columns(df):
 
 print("At this point, i'm converting the currencies", available_currencies)
 
+pre_conversion_file_path = os.path.join(".\\processed_data", 'sales_pre_conversion_merged.csv')
+merged_df.to_csv(pre_conversion_file_path, index=False)
+print(f'Pre-conversion merged file saved to: {pre_conversion_file_path}')
 
 print("Currency conversion rates:", currency_conversion_to_euro)
 if currency_conversion_to_euro:

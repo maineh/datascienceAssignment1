@@ -34,6 +34,14 @@
         "documentation": {}
     },
     {
+        "label": "parser",
+        "importPath": "dateutil",
+        "description": "dateutil",
+        "isExtraImport": true,
+        "detail": "dateutil",
+        "documentation": {}
+    },
+    {
         "label": "matplotlib.pyplot",
         "kind": 6,
         "isExtraImport": true,
@@ -83,6 +91,24 @@
         "description": "bokeh.plotting",
         "isExtraImport": true,
         "detail": "bokeh.plotting",
+        "documentation": {}
+    },
+    {
+        "label": "plotly.express",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "plotly.express",
+        "description": "plotly.express",
+        "detail": "plotly.express",
+        "documentation": {}
+    },
+    {
+        "label": "pycountry",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pycountry",
+        "description": "pycountry",
+        "detail": "pycountry",
         "documentation": {}
     },
     {
@@ -396,7 +422,7 @@
         "kind": 2,
         "importPath": "sales_data_scrubber",
         "description": "sales_data_scrubber",
-        "peekOfCode": "def convert_charged_amount(df, currency_conversion_to_euro):\n    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results\n    for index, row in df.iterrows():\n        currency = row['Currency of Sale']\n        if pd.isnull(currency):  # Check for NaN currency\n            print(f\"Row with index {index} has NaN currency. Skipping conversion.\")\n            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)\n            continue  # Skip the rest of the loop for this row\n    if currency in available_currencies:\n        # Convert the 'Charged Amount'",
+        "peekOfCode": "def convert_charged_amount(df, currency_conversion_to_euro):\n    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results\n    for index, row in df.iterrows():\n        currency = row['Currency of Sale']\n        if pd.isnull(currency):  # Check for NaN currency\n            print(f\"Row with index {index} has NaN currency. Skipping conversion.\")\n            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)\n            continue  # Skip the rest of the loop for this row\n        # Check if the currency is in the available currencies set\n        if currency in available_currencies:",
         "detail": "sales_data_scrubber",
         "documentation": {}
     },
@@ -486,7 +512,16 @@
         "kind": 5,
         "importPath": "sales_data_scrubber",
         "description": "sales_data_scrubber",
-        "peekOfCode": "merged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results\n    for index, row in df.iterrows():\n        currency = row['Currency of Sale']\n        if pd.isnull(currency):  # Check for NaN currency\n            print(f\"Row with index {index} has NaN currency. Skipping conversion.\")\n            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)\n            continue  # Skip the rest of the loop for this row\n    if currency in available_currencies:",
+        "peekOfCode": "merged_df = pd.concat(all_dfs, ignore_index=True)\ndef convert_charged_amount(df, currency_conversion_to_euro):\n    result_df = pd.DataFrame()  # Initialize an empty DataFrame for the results\n    for index, row in df.iterrows():\n        currency = row['Currency of Sale']\n        if pd.isnull(currency):  # Check for NaN currency\n            print(f\"Row with index {index} has NaN currency. Skipping conversion.\")\n            result_df = pd.concat([result_df, pd.DataFrame([row])], ignore_index=True)\n            continue  # Skip the rest of the loop for this row\n        # Check if the currency is in the available currencies set",
+        "detail": "sales_data_scrubber",
+        "documentation": {}
+    },
+    {
+        "label": "pre_conversion_file_path",
+        "kind": 5,
+        "importPath": "sales_data_scrubber",
+        "description": "sales_data_scrubber",
+        "peekOfCode": "pre_conversion_file_path = os.path.join(\".\\\\processed_data\", 'sales_pre_conversion_merged.csv')\nmerged_df.to_csv(pre_conversion_file_path, index=False)\nprint(f'Pre-conversion merged file saved to: {pre_conversion_file_path}')\nprint(\"Currency conversion rates:\", currency_conversion_to_euro)\nif currency_conversion_to_euro:\n    merged_df = convert_charged_amount(merged_df, currency_conversion_to_euro)\nmerged_df = merge_columns(merged_df)\ncolumns_to_delete = ['Timestamp', 'Tax Status', 'Refund Type', 'Financial Status','Product Type','Hardware', 'Buyer State', 'Buyer Currency', 'Amount (Buyer Currency)','Currency Conversion Rate', 'Merchant Currency', 'Base Plan ID', 'Offer ID','Device Model',\t'Currency of Sale'\t,'Item Price',\t'Taxes Collected','Charged Amount',\t'City of Buyer',\t'State of Buyer'  ]  # Specify columns to delete here  # noqa: E999\nmerged_df = delete_columns(merged_df, columns_to_delete)  # Update merged_df with the result of delete_columns\ndef filter_transaction_type(df):",
         "detail": "sales_data_scrubber",
         "documentation": {}
     },
@@ -596,6 +631,96 @@
         "description": "stats_country_data_scrubber.py",
         "peekOfCode": "merged_file_path = os.path.join(\"./merged_data\", 'country_stats_merged.csv')\ncountry_stats_merged.to_csv(merged_file_path, index=False)",
         "detail": "stats_country_data_scrubber.py",
+        "documentation": {}
+    },
+    {
+        "label": "directory",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "directory = './merged_data'\n# List of CSV files containing country statistics and sales data\ncountry_stats_file = ['country_stats_merged.csv']\nsales_file = ['sales_merged.csv']\n# Loop through each country statistics file\nfor file in country_stats_file:\n    # Check if the file name ends with 'merged.csv'\n    if file.endswith('merged.csv'):\n        # Construct the file path\n        file_path = os.path.join(directory, file)",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "country_stats_file",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "country_stats_file = ['country_stats_merged.csv']\nsales_file = ['sales_merged.csv']\n# Loop through each country statistics file\nfor file in country_stats_file:\n    # Check if the file name ends with 'merged.csv'\n    if file.endswith('merged.csv'):\n        # Construct the file path\n        file_path = os.path.join(directory, file)\n        # Read the CSV file into a DataFrame\n        country_stats_df = pd.read_csv(file_path)",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "sales_file",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "sales_file = ['sales_merged.csv']\n# Loop through each country statistics file\nfor file in country_stats_file:\n    # Check if the file name ends with 'merged.csv'\n    if file.endswith('merged.csv'):\n        # Construct the file path\n        file_path = os.path.join(directory, file)\n        # Read the CSV file into a DataFrame\n        country_stats_df = pd.read_csv(file_path)\nfor file in sales_file:",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "country_code_mapping",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "country_code_mapping = {country.alpha_2: country.alpha_3 for country in pycountry.countries}\n# Map the codes in your DataFrame using the dictionary\ncountry_stats_df['Country'] = country_stats_df['Country'].map(country_code_mapping)\nsales_df['Country'] = sales_df['Country of Buyer'].map(country_code_mapping)\n# Convert the 'Date' column to datetime format\ncountry_stats_df['Date'] = pd.to_datetime(country_stats_df['Date'])\n# Average rating per country per day\navg_rating_per_country_per_day_fig = px.scatter_geo(country_stats_df,\n                     locations=\"Country\",  # Assumes 'Country' contains ISO country codes\n                     size=\"Total Average Rating\",  # Bubble size based on total average rating",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "country_stats_df['Country']",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "country_stats_df['Country'] = country_stats_df['Country'].map(country_code_mapping)\nsales_df['Country'] = sales_df['Country of Buyer'].map(country_code_mapping)\n# Convert the 'Date' column to datetime format\ncountry_stats_df['Date'] = pd.to_datetime(country_stats_df['Date'])\n# Average rating per country per day\navg_rating_per_country_per_day_fig = px.scatter_geo(country_stats_df,\n                     locations=\"Country\",  # Assumes 'Country' contains ISO country codes\n                     size=\"Total Average Rating\",  # Bubble size based on total average rating\n                     color=\"Total Average Rating\",  # Color based on total average rating\n                     animation_frame=country_stats_df['Date'].dt.strftime('%Y-%m-%d'),",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "sales_df['Country']",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "sales_df['Country'] = sales_df['Country of Buyer'].map(country_code_mapping)\n# Convert the 'Date' column to datetime format\ncountry_stats_df['Date'] = pd.to_datetime(country_stats_df['Date'])\n# Average rating per country per day\navg_rating_per_country_per_day_fig = px.scatter_geo(country_stats_df,\n                     locations=\"Country\",  # Assumes 'Country' contains ISO country codes\n                     size=\"Total Average Rating\",  # Bubble size based on total average rating\n                     color=\"Total Average Rating\",  # Color based on total average rating\n                     animation_frame=country_stats_df['Date'].dt.strftime('%Y-%m-%d'),\n                     hover_name=\"Country\",  # Tooltip shows country name",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "country_stats_df['Date']",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "country_stats_df['Date'] = pd.to_datetime(country_stats_df['Date'])\n# Average rating per country per day\navg_rating_per_country_per_day_fig = px.scatter_geo(country_stats_df,\n                     locations=\"Country\",  # Assumes 'Country' contains ISO country codes\n                     size=\"Total Average Rating\",  # Bubble size based on total average rating\n                     color=\"Total Average Rating\",  # Color based on total average rating\n                     animation_frame=country_stats_df['Date'].dt.strftime('%Y-%m-%d'),\n                     hover_name=\"Country\",  # Tooltip shows country name\n                     projection=\"natural earth\",\n                     title=\"Total Average Rating by Country\",",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "avg_rating_per_country_per_day_fig",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "avg_rating_per_country_per_day_fig = px.scatter_geo(country_stats_df,\n                     locations=\"Country\",  # Assumes 'Country' contains ISO country codes\n                     size=\"Total Average Rating\",  # Bubble size based on total average rating\n                     color=\"Total Average Rating\",  # Color based on total average rating\n                     animation_frame=country_stats_df['Date'].dt.strftime('%Y-%m-%d'),\n                     hover_name=\"Country\",  # Tooltip shows country name\n                     projection=\"natural earth\",\n                     title=\"Total Average Rating by Country\",\n                     color_continuous_scale=\"viridis\",  # Vibrant color scale\n                     range_color=[1,5])  # Range covering the full scope of ratings",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "sales_by_country",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "sales_by_country = sales_df.groupby('Country')['Amount (Merchant Currency)'].sum().reset_index()\nsales_map_fig = px.choropleth(sales_by_country,\n                              locations=\"Country\",\n                              color=\"Amount (Merchant Currency)\",\n                              hover_name=\"Country\",\n                              projection=\"natural earth\",\n                              title=\"Total Sales Volume by Country\",\n                              color_continuous_scale=\"viridis\")  # Adjust color scale as desired\n# Show the figure\n#sales_map_fig.show()",
+        "detail": "visualisationMai",
+        "documentation": {}
+    },
+    {
+        "label": "sales_map_fig",
+        "kind": 5,
+        "importPath": "visualisationMai",
+        "description": "visualisationMai",
+        "peekOfCode": "sales_map_fig = px.choropleth(sales_by_country,\n                              locations=\"Country\",\n                              color=\"Amount (Merchant Currency)\",\n                              hover_name=\"Country\",\n                              projection=\"natural earth\",\n                              title=\"Total Sales Volume by Country\",\n                              color_continuous_scale=\"viridis\")  # Adjust color scale as desired\n# Show the figure\n#sales_map_fig.show()",
+        "detail": "visualisationMai",
         "documentation": {}
     }
 ]

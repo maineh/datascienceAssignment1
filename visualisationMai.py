@@ -7,6 +7,7 @@ import seaborn as sns
 import plotly.express as px
 import pycountry
 
+
 # Directory where your CSV files are stored, update this path as necessary
 directory = './merged_data'
 
@@ -41,6 +42,7 @@ sales_df['Country'] = sales_df['Country of Buyer'].map(country_code_mapping)
 country_stats_df['Date'] = pd.to_datetime(country_stats_df['Date'])
 
 
+
 # Average rating per country per day
 
 avg_rating_per_country_per_day_fig = px.scatter_geo(country_stats_df,
@@ -67,7 +69,8 @@ sales_map_fig = px.choropleth(sales_by_country,
                               color_continuous_scale="viridis")  # Adjust color scale as desired
 
 # Show the figure
-sales_map_fig.show()
+#sales_map_fig.show()
+
 
 
 

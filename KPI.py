@@ -14,7 +14,6 @@ for file in file_name:
     if file.endswith('merged.csv'):  # Ensure to only include processed files
         file_path = os.path.join(directory, file)
         df = pd.read_csv(file_path)
-print(df.head())
 
 
 #The following lines describe a KPI based on Sales volume
@@ -32,14 +31,22 @@ average_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean
 print(average_amount_by_month)
 #This line calculates the monthly revenue and growth
 monthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()
-print(monthly_revenue)
+#print(monthly_revenue)
 
 
 monthly_transaction_count = df.groupby('Month')['Transaction ID'].count()
-print(monthly_transaction_count)
 # Calculate Monthly Growth Percentage
 monthly_revenue_growth = monthly_revenue.pct_change() * 100
 monthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100
+
+# Export the x-axis (Month)
+df[['Month']].to_csv('month_data.csv', index=False)
+
+# Export monthly_revenue_growth as its own CSV
+monthly_revenue_growth.to_frame(name='Monthly Revenue Growth (%)').reset_index(drop=True).to_csv('monthly_revenue_growth.csv', index=False)
+
+# Export monthly_transaction_count_growth as its own CSV
+monthly_transaction_count_growth.to_frame(name='Monthly Transaction Count Growth (%)').reset_index(drop=True).to_csv('monthly_transaction_count_growth.csv', index=False)
 
 # Create a Plot
 fig, ax1 = plt.subplots(figsize=(10, 6))

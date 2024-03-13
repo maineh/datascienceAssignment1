@@ -55,7 +55,7 @@ avg_rating_per_country_per_day_fig = px.scatter_geo(country_stats_df,
                      title="Total Average Rating by Country",
                      color_continuous_scale="viridis",  # Vibrant color scale
                      range_color=[1,5])  # Range covering the full scope of ratings
-#avg_rating_per_country_per_day_fig.show()
+avg_rating_per_country_per_day_fig.show()
 
 # Sales volume per country
 sales_by_country = sales_df.groupby('Country')['Amount (Merchant Currency)'].sum().reset_index()

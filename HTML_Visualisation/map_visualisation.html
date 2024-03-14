@@ -5,41 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maps Dashboard</title>
     <style>
+        :root {
+            --dark-bg: #121212;
+            --accent-color: #22c55e;
+            --text-color: #ffffff;
+        }
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            display: flex; /* Updated to use flex display */
+            height: 100vh; /* Set to full viewport height */
+        }
+        .sidebar {
+            flex: 0 0 200px; /* Sidebar width and flex settings */
+            background-color: #1e1e1e;
             padding: 20px;
+            overflow-y: auto; /* Allows scrolling on the y-axis if content is too long */
+        }
+        .main-content {
+            flex: 1; /* Allows main content to fill the remaining space */
+            padding: 20px;
+            overflow-y: auto; /* Allows scrolling on the y-axis if content is too long */
         }
         .iframe-container {
-            width: 80%;
-            border: 2px solid #007BFF;
-            border-radius: 5px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
         iframe {
             width: 100%;
             height: 500px;
-            border: none;
+            background-color: var(--dark-bg);
         }
-        .dashboard-title {
+        .title {
+            color: var(--accent-color);
             text-align: center;
-            color: #007BFF;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <h1 class="dashboard-title">Maps Dashboard</h1>
-    <div class="iframe-container">
-        <iframe src="map1.html" title="Map 1"></iframe>
+    <div class="sidebar">
+        <!-- Navigation links go here -->
     </div>
-    <div class="iframe-container">
-        <iframe src="map2.html" title="Map 2"></iframe>
-    </div>
-    <div class="iframe-container">
-        <iframe src="map3.html" title="Map 3"></iframe>
+    <div class="main-content">
+        <h1 class="title">Maps Dashboard</h1>
+        <div class="iframe-container">
+            <iframe src="map1.html" title="Map 1"></iframe>
+        </div>
+        <div class="iframe-container">
+            <iframe src="map2.html" title="Map 2"></iframe>
+        </div>
+        <div class="iframe-container">
+            <iframe src="map3.html" title="Map 3"></iframe>
+        </div>
     </div>
 </body>
 </html>

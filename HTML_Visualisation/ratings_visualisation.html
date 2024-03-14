@@ -43,14 +43,26 @@
             text-align: center;
             margin-bottom: 20px;
         }
+		.back-button {
+            position: absolute; /* Adjusts button positioning within sidebar */
+            top: 20px; /* Distance from top of sidebar */
+            left: 20px; /* Distance from left of sidebar */
+            padding: 10px 20px; /* Button padding */
+            background-color: var(--accent-color); /* Button background color */
+            color: var(--text-color); /* Button text color */
+            border: none; /* Removes default border */
+            cursor: pointer; /* Changes cursor to pointer on hover */
+        }
     </style>
 </head>
 <body>
     <div class="sidebar">
-        <!-- Navigation links go here -->
+    <div class="sidebar">
+        <button class="back-button" onclick="window.close()">Back</button>
+    </div>
     </div>
     <div class="main-content">
-        <h1 class="title">Carshes and Ratings</h1>
+        <h1 class="title">Crashes and Ratings</h1>
         <div class="iframe-container">
             <iframe src="crashes_and_daily_rating_plotly.html" title="Crashes and daily ratings"></iframe>
         </div>

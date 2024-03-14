@@ -179,7 +179,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "directory = './merged_data'\nfile_name = ['sales_merged.csv']\nfor file in file_name:\n    if file.endswith('merged.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(directory, file)\n        df = pd.read_csv(file_path)\nprint(df.head())\n#The following lines describe a KPI based on Sales volume\n# Convert 'Date' to datetime object\ndf['Date'] = pd.to_datetime(df['Date'])",
+        "peekOfCode": "directory = './merged_data'\nfile_name = ['sales_merged.csv']\nfor file in file_name:\n    if file.endswith('merged.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(directory, file)\n        df = pd.read_csv(file_path)\n#The following lines describe a KPI based on Sales volume\n# Convert 'Date' to datetime object\ndf['Date'] = pd.to_datetime(df['Date'])\n# Extract date attributes into new columns",
         "detail": "KPI",
         "documentation": {}
     },
@@ -188,7 +188,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "file_name = ['sales_merged.csv']\nfor file in file_name:\n    if file.endswith('merged.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(directory, file)\n        df = pd.read_csv(file_path)\nprint(df.head())\n#The following lines describe a KPI based on Sales volume\n# Convert 'Date' to datetime object\ndf['Date'] = pd.to_datetime(df['Date'])\n# Extract date attributes into new columns",
+        "peekOfCode": "file_name = ['sales_merged.csv']\nfor file in file_name:\n    if file.endswith('merged.csv'):  # Ensure to only include processed files\n        file_path = os.path.join(directory, file)\n        df = pd.read_csv(file_path)\n#The following lines describe a KPI based on Sales volume\n# Convert 'Date' to datetime object\ndf['Date'] = pd.to_datetime(df['Date'])\n# Extract date attributes into new columns\ndf['Year'] = df['Date'].dt.year",
         "detail": "KPI",
         "documentation": {}
     },
@@ -206,7 +206,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "df['Year'] = df['Date'].dt.year\ndf['Month'] = df['Date'].dt.month\ndf['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)",
+        "peekOfCode": "df['Year'] = df['Date'].dt.year\ndf['Month'] = df['Date'].dt.month\ndf['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\n#print(monthly_revenue)",
         "detail": "KPI",
         "documentation": {}
     },
@@ -215,7 +215,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "df['Month'] = df['Date'].dt.month\ndf['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()",
+        "peekOfCode": "df['Month'] = df['Date'].dt.month\ndf['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\n#print(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()",
         "detail": "KPI",
         "documentation": {}
     },
@@ -224,7 +224,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "df['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)",
+        "peekOfCode": "df['Day'] = df['Date'].dt.day\n#The data is grouped by month \n#This line calculates the average amount of money per transaction per month\naverage_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\n#print(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\n# Calculate Monthly Growth Percentage",
         "detail": "KPI",
         "documentation": {}
     },
@@ -233,7 +233,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "average_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100",
+        "peekOfCode": "average_amount_by_month = df.groupby('Month')['Amount (Merchant Currency)'].mean()\nprint(average_amount_by_month)\n#This line calculates the monthly revenue and growth\nmonthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\n#print(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Export the x-axis (Month)",
         "detail": "KPI",
         "documentation": {}
     },
@@ -242,7 +242,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "monthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\nprint(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth",
+        "peekOfCode": "monthly_revenue = df.groupby('Month')['Amount (Merchant Currency)'].sum()\n#print(monthly_revenue)\nmonthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Export the x-axis (Month)\ndf[['Month']].to_csv('month_data.csv', index=False)\n# Export monthly_revenue_growth as its own CSV\nmonthly_revenue_growth.to_frame(name='Monthly Revenue Growth (%)').reset_index(drop=True).to_csv('monthly_revenue_growth.csv', index=False)",
         "detail": "KPI",
         "documentation": {}
     },
@@ -251,7 +251,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "monthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\nprint(monthly_transaction_count)\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth\nax1.plot(monthly_revenue_growth, color='blue', marker='o', label='Revenue Growth (%)')\nax1.set_xlabel('Month')",
+        "peekOfCode": "monthly_transaction_count = df.groupby('Month')['Transaction ID'].count()\n# Calculate Monthly Growth Percentage\nmonthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Export the x-axis (Month)\ndf[['Month']].to_csv('month_data.csv', index=False)\n# Export monthly_revenue_growth as its own CSV\nmonthly_revenue_growth.to_frame(name='Monthly Revenue Growth (%)').reset_index(drop=True).to_csv('monthly_revenue_growth.csv', index=False)\n# Export monthly_transaction_count_growth as its own CSV\nmonthly_transaction_count_growth.to_frame(name='Monthly Transaction Count Growth (%)').reset_index(drop=True).to_csv('monthly_transaction_count_growth.csv', index=False)",
         "detail": "KPI",
         "documentation": {}
     },
@@ -260,7 +260,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "monthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth\nax1.plot(monthly_revenue_growth, color='blue', marker='o', label='Revenue Growth (%)')\nax1.set_xlabel('Month')\nax1.set_ylabel('Revenue Growth (%)', color='blue')\nax1.tick_params('y', colors='blue')\nax1.legend(loc='upper left')",
+        "peekOfCode": "monthly_revenue_growth = monthly_revenue.pct_change() * 100\nmonthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Export the x-axis (Month)\ndf[['Month']].to_csv('month_data.csv', index=False)\n# Export monthly_revenue_growth as its own CSV\nmonthly_revenue_growth.to_frame(name='Monthly Revenue Growth (%)').reset_index(drop=True).to_csv('monthly_revenue_growth.csv', index=False)\n# Export monthly_transaction_count_growth as its own CSV\nmonthly_transaction_count_growth.to_frame(name='Monthly Transaction Count Growth (%)').reset_index(drop=True).to_csv('monthly_transaction_count_growth.csv', index=False)\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))",
         "detail": "KPI",
         "documentation": {}
     },
@@ -269,7 +269,7 @@
         "kind": 5,
         "importPath": "KPI",
         "description": "KPI",
-        "peekOfCode": "monthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth\nax1.plot(monthly_revenue_growth, color='blue', marker='o', label='Revenue Growth (%)')\nax1.set_xlabel('Month')\nax1.set_ylabel('Revenue Growth (%)', color='blue')\nax1.tick_params('y', colors='blue')\nax1.legend(loc='upper left')\n# Create a secondary y-axis for Transaction Count",
+        "peekOfCode": "monthly_transaction_count_growth = monthly_transaction_count.pct_change() * 100\n# Export the x-axis (Month)\ndf[['Month']].to_csv('month_data.csv', index=False)\n# Export monthly_revenue_growth as its own CSV\nmonthly_revenue_growth.to_frame(name='Monthly Revenue Growth (%)').reset_index(drop=True).to_csv('monthly_revenue_growth.csv', index=False)\n# Export monthly_transaction_count_growth as its own CSV\nmonthly_transaction_count_growth.to_frame(name='Monthly Transaction Count Growth (%)').reset_index(drop=True).to_csv('monthly_transaction_count_growth.csv', index=False)\n# Create a Plot\nfig, ax1 = plt.subplots(figsize=(10, 6))\n# Plot Monthly Revenue Growth",
         "detail": "KPI",
         "documentation": {}
     },
@@ -710,7 +710,7 @@
         "kind": 5,
         "importPath": "visualisationMai",
         "description": "visualisationMai",
-        "peekOfCode": "sales_by_country = sales_df.groupby('Country')['Amount (Merchant Currency)'].sum().reset_index()\nsales_map_fig = px.choropleth(sales_by_country,\n                              locations=\"Country\",\n                              color=\"Amount (Merchant Currency)\",\n                              hover_name=\"Country\",\n                              projection=\"natural earth\",\n                              title=\"Total Sales Volume by Country\",\n                              color_continuous_scale=\"viridis\")  # Adjust color scale as desired\n# Show the figure\n#sales_map_fig.show()",
+        "peekOfCode": "sales_by_country = sales_df.groupby('Country')['Amount (Merchant Currency)'].sum().reset_index()\nsales_map_fig = px.choropleth(sales_by_country,\n                              locations=\"Country\",\n                              color=\"Amount (Merchant Currency)\",\n                              hover_name=\"Country\",\n                              projection=\"natural earth\",\n                              title=\"Total Sales Volume by Country\",\n                              color_continuous_scale=\"viridis\")  # Adjust color scale as desired\n# Show the figure\nsales_map_fig.show()",
         "detail": "visualisationMai",
         "documentation": {}
     },
@@ -719,7 +719,7 @@
         "kind": 5,
         "importPath": "visualisationMai",
         "description": "visualisationMai",
-        "peekOfCode": "sales_map_fig = px.choropleth(sales_by_country,\n                              locations=\"Country\",\n                              color=\"Amount (Merchant Currency)\",\n                              hover_name=\"Country\",\n                              projection=\"natural earth\",\n                              title=\"Total Sales Volume by Country\",\n                              color_continuous_scale=\"viridis\")  # Adjust color scale as desired\n# Show the figure\n#sales_map_fig.show()",
+        "peekOfCode": "sales_map_fig = px.choropleth(sales_by_country,\n                              locations=\"Country\",\n                              color=\"Amount (Merchant Currency)\",\n                              hover_name=\"Country\",\n                              projection=\"natural earth\",\n                              title=\"Total Sales Volume by Country\",\n                              color_continuous_scale=\"viridis\")  # Adjust color scale as desired\n# Show the figure\nsales_map_fig.show()",
         "detail": "visualisationMai",
         "documentation": {}
     }
